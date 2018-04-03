@@ -4,7 +4,7 @@ This is the pre-release of the code for the paper `Pointwise Convolutional Neura
 This code is under further revision, basically just cleaning up and removing unnecessary dependencies. 
 For now, please kindly only use the code for education or non-commercial purposes.
 
-* Dependencies
+## Dependencies
 
 - Scaled exponential linear units (SeLU) for self-normalization in neural network.
 
@@ -13,7 +13,7 @@ For now, please kindly only use the code for education or non-commercial purpose
 - Some other utility code from PointNet
 
 
-* Usage
+## Usage
 
 Please install Tensorflow and a C++ compiler to compile the convolution operator to a .so file. 
 To start, you might want to simply compile the convolution on the CPU, and make sure it work properly first. We experimented with GPU implementation, and also multi-GPU implementation. 
@@ -27,7 +27,7 @@ Despite that, the experiments were done on NVIDIA GTX 1070, GTX 1080, and Titan 
 It will take hours or 1-2 days depending on your setup to finish training for object recognition. For scene segmentation, it might take longer. 
 
 
-* Citation 
+## Citation 
 
 Please cite our [paper](https://arxiv.org/abs/1712.05245)
   
@@ -40,7 +40,7 @@ Please cite our [paper](https://arxiv.org/abs/1712.05245)
 
 if you find this useful for your work. 
 
-* Future work 
+## Future work 
 
 We made this simple operator with the hope that existing techniques in 2D image understanding tasks can be brought to 3D in a more straightforward manner. More research along this direction is encouraged. 
 

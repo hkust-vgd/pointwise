@@ -1,0 +1,4 @@
+ModelNet40 (450 MB): https://shapenet.cs.stanford.edu/media/modelnet40_ply_hdf5_2048.zip
+S3DIS (1.6 GB)     : https://shapenet.cs.stanford.edu/media/indoor3d_sem_seg_hdf5_data.zip
+SceneNN (5.5 GB)   : https://drive.google.com/open?id=1PkP6m2mxCfCh_u3SnzLZod7J1zpzD6t4
+

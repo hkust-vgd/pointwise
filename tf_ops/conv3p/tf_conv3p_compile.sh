@@ -1,8 +1,9 @@
-#/bin/bash
+#!/bin/bash
 
 # use -a option to enable atrous 
 
 TF_INC=$(python3 -c 'import tensorflow as tf; print(tf.sysconfig.get_include())')
+TF_LIB=$(python3 -c 'import tensorflow as tf; print(tf.sysconfig.get_lib())')
 
 # non-atrous convolution
 FILE_CUDA=tf_conv3p_naive_ctxmem
@@ -22,24 +23,20 @@ while getopts ":a" opt; do
   esac
 done
 
-
 OUT=tf_conv3p.so 
 
-# with CUDA
-#/usr/local/cuda-8.0/bin/nvcc $FILE.cu -std=c++11 -o $FILE.so -shared -g -O3 -DGOOGLE_CUDA=1 -Xcompiler -fPIC -use_fast_math -I /usr/local/cuda-8.0/include -I $TF_INC  -lcudart -L /usr/local/cuda-8.0/lib64/ -D_GLIBCXX_USE_CXX11_ABI=0 
-
-# with OpenMP
-#g++ -std=c++11 $FILE.cpp -o $FILE.so -shared -fPIC -I $TF_INC -g -O2 -fopenmp -DCONV_OPENMP -D_GLIBCXX_USE_CXX11_ABI=0
-
-# no OpenMP
-#g++ -std=c++11 $FILE.cpp -o $FILE.so -shared -fPIC -I $TF_INC -g -O2 -D_GLIBCXX_USE_CXX11_ABI=0
-#g++ -std=c++11 $FILE.cpp -o $FILE.so -shared -fPIC -I $TF_INC -g -O0 -D_GLIBCXX_USE_CXX11_ABI=0
+# This flag is only required for compatibility if your Tensorflow is built with gcc < 5.1 or has ABI tag disabled
+#ABI_FLAG=-D_GLIBCXX_USE_CXX11_ABI=0
 
 # Both CUDA and CPU code in a single library: compile each implementation, and register op and link both into the same shared library
-g++ -std=c++11 -c $FILE_CPU.cpp -o ${OUT}_cpu.o -fPIC -I $TF_INC -g -O3 -fopenmp -DCONV_OPENMP -D_GLIBCXX_USE_CXX11_ABI=0
-/usr/local/cuda-8.0/bin/nvcc -std=c++11 -c $FILE_CUDA.cu -o ${OUT}_cuda.o -c -g -O3 -DGOOGLE_CUDA=1 -Xcompiler -fPIC -use_fast_math -I /usr/local/cuda-8.0/include -I $TF_INC  -D_GLIBCXX_USE_CXX11_ABI=0
-g++ -std=c++11 -c register_op.cpp -o register_op.o -fPIC -I $TF_INC -g -O3 -D_GLIBCXX_USE_CXX11_ABI=0 $FLAGS
-g++ -shared -o $OUT register_op.o ${OUT}_cuda.o ${OUT}_cpu.o -lcudart -L /usr/local/cuda-8.0/lib64/
+g++ -std=c++11 -c $FILE_CPU.cpp -o ${OUT}_cpu.o -fPIC -I $TF_INC -g -O3 -fopenmp -DCONV_OPENMP $ABI_FLAG
+/usr/local/cuda/bin/nvcc -std=c++11 -c $FILE_CUDA.cu -o ${OUT}_cuda.o -c -g -O3 -DGOOGLE_CUDA=1 -Xcompiler -fPIC -use_fast_math -I /usr/local/cuda/include -I $TF_INC $ABI_FLAG
+g++ -std=c++11 -c register_op.cpp -o register_op.o -fPIC -I $TF_INC -g -O3 $ABI_FLAG $FLAGS
+
+# Linking. From Tensorflow 1.4 somehow we need tensorflow_framework
+g++ -shared -o $OUT register_op.o ${OUT}_cuda.o ${OUT}_cpu.o -lcudart -L /usr/local/cuda/lib64/ -L$TF_LIB -ltensorflow_framework -fopenmp
+
+# Clean up
 rm ${OUT}_cpu.o 
 rm ${OUT}_cuda.o
 

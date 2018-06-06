@@ -60,7 +60,7 @@ def eval(args):
                 batch_prediction_placeholder = network.model(batch_points_placeholder, batch_input_placeholder, is_training=False)
 
             saver = tf.train.Saver(max_to_keep=None)
-            file = "{}_snapshot_{}.tf".format(model_name, epoch)
+            file = "./{}_snapshot_{}.tf".format(model_name, epoch)
             print('Testing with model ', file)
             saver.restore(session, file)
 

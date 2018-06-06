@@ -82,9 +82,9 @@ class PointConvNet:
             logits: prediction with shape [batch_size, num_class]
             labels: ground truth scalar labels with shape [batch_size]
         """
-        onehot_labels = tf.one_hot(labels, depth=self.num_class)
-        e = tf.losses.softmax_cross_entropy(onehot_labels, logits)
-
-        #e = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels)
-        #e = tf.reduce_mean(e)
+        #onehot_labels = tf.one_hot(labels, depth=self.num_class)        
+        #e = tf.losses.softmax_cross_entropy(onehot_labels, logits)
+        
+        e = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels)
+        e = tf.reduce_mean(e)
         return e

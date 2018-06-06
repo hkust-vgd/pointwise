@@ -6,7 +6,7 @@
     "decay_rate" : 0.96,    
     "model" : "pointcnn2_acsd",
     "sort_cloud" : true,
-    "sort_method" : "morton",
+    "sort_method" : "xyz",
     "batch_size" : 32,
     "snapshot_interval" : 5,
     "use_gpu" : false,

@@ -128,7 +128,7 @@ def train(args):
                     _, summary, loss_val, pred_val = session.run([train_op, merged, loss, batch_prediction_placeholder], feed_dict=feed_dict)
                     toc = timeit.default_timer()
                     batch_time += toc - tic
-
+                    
                     pred_label = np.argmax(pred_val, axis=1)
 
                     correct = np.sum(pred_label == gt_label)
@@ -160,7 +160,7 @@ def train(args):
                 train_writer.add_summary(summary)
 
                 if epoch % snapshot_interval == 0 or epoch == max_epoch - 1:
-                    snapshot_file = "{}_snapshot_{}.tf".format(model_name, epoch)
+                    snapshot_file = "./{}_snapshot_{}.tf".format(model_name, epoch)
                     saver.save(session, snapshot_file)
                     print('Model %s saved' % snapshot_file)
 

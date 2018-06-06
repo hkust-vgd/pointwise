@@ -54,7 +54,7 @@ def eval(args, start_epoch):
             # Save to disk
             saver = tf.train.Saver(max_to_keep=None)
 
-            weight_file = "{}_snapshot_{}.tf".format(model_name, start_epoch)            
+            weight_file = "./{}_snapshot_{}.tf".format(model_name, start_epoch)            
             saver.restore(session, weight_file)
             print('Weight file {} restored'.format(weight_file))
             

@@ -6,13 +6,6 @@ import util
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
-import libpluie as pe
-
-# Dataset availability check
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-#if not os.path.exists(os.path.join(DATA_DIR, 'modelnet40_ply_hdf5_2048')):
-#    print('Data folder {0} not found. Please run download.py.' % DATA_DIR)
-#    sys.exit()
 
 def shuffle_data(data, labels):
     """ Shuffle data and labels.
@@ -105,6 +98,7 @@ def loadDataFile_with_seg(filename):
     return load_h5_data_label_seg(filename)
 
 def sort_point_cloud_morton(points):
+    import libpluie as pe
     batch_size = points.shape[0]
     num_points = points.shape[1]
     pc = np.zeros((num_points, 3))

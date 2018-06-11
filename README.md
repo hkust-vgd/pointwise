@@ -37,6 +37,10 @@ By default, `epoch` is 0 if it is not passed as a parameter to the above command
 
 Similar code structure is adopted for scene segmentation task. 
 
+## Troubleshooting 
+
+If you are using Tensorflow 1.4, you might want to try compiling with `tf_conv3p_compile_tf14.sh` instead. It fixes some include paths due to `nv_sync.h`, and set the flag `_GLIBCXX_USE_CXX11_ABI=0` to make it compatible to libraries compiled with GCC version earlier than 5.1. 
+
 ## Performance
 
 As this is a custom convolution operator we built with minimum optimization tricks that we know, you might find it running more slowly than those Tensorflow built-in operators. 

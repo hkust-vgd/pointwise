@@ -2,16 +2,6 @@
 
 This is the release of the code for the paper `Pointwise Convolutional Neural Networks' in CVPR 2018. 
 
-## Dependencies
-
-- Scaled exponential linear units (SeLU) for self-normalization in neural network.
-
-- ModelNet40 data from PointNet
-
-- Some other utility code from PointNet
-
-- h5py
-
 ## Usage
 
 The code is tested in latest Ubuntu 18.04 LTS with CUDA 9.2 and Tensorflow 1.9. 
@@ -35,7 +25,13 @@ To evaluate, execute
    
 By default, `epoch` is 0 if it is not passed as a parameter to the above command. During training, the network is saved after each epoch. You can resume the training if the network was saved before. Just pass the epoch number to the training command.
 
-Similar code structure is adopted for scene segmentation task. 
+Similar code structure is adopted for scene segmentation task. For this task, we also provide a re-implementation of PointNet in PyTorch based on the open source implementation by [fxia22](https://github.com/fxia22/pointnet.pytorch).
+
+## Training Data 
+
+- [ModelNet40](https://shapenet.cs.stanford.edu/media/modelnet40_ply_hdf5_2048.zip): 450 MB.
+- [SceneNN Segmentation](https://drive.google.com/open?id=1PkP6m2mxCfCh_u3SnzLZod7J1zpzD6t4): 5.5 GB. With 76 scenes, re-annotated with NYU-D v2 40 classes. 56 scenes for training and 20 scenes for testing.  
+- [S3DIS Segmentation](https://shapenet.cs.stanford.edu/media/indoor3d_sem_seg_hdf5_data.zip): 1.6 GB.
 
 ## Troubleshooting 
 
@@ -47,6 +43,18 @@ As this is a custom convolution operator we built with minimum optimization tric
 Despite that, the experiments were done on NVIDIA GTX 1070, GTX 1080, and Titan X (first generation) without big issues. 
 
 It will take hours or 1-2 days depending on your setup to finish training for object recognition. For scene segmentation, it might take longer. 
+
+## Dependencies
+
+This code includes the following third party libraries and data:
+
+- Scaled exponential linear units (SeLU) for self-normalization in neural network.
+
+- ModelNet40 data from PointNet
+
+- Some other utility code from PointNet
+
+- h5py
 
 ## Citation 
 

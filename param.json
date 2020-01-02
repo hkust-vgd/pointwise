@@ -9,7 +9,7 @@
     "sort_method" : "xyz",
     "batch_size" : 32,
     "snapshot_interval" : 5,
-    "use_gpu" : false,
+    "use_gpu" : true,
 
     "scene_seg" : {
         "model" : "pointcnn_scene_seg_acsd",

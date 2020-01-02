@@ -103,6 +103,10 @@ def train(args):
             merged = tf.summary.merge_all()
             train_writer = tf.summary.FileWriter('log', session.graph)
 
+            # Trainable parameters
+            parameters = np.sum([np.prod(v.shape.as_list()) for v in tf.trainable_variables()])
+            print('Parameters: {}'.format(parameters))
+
             for epoch in range(start_epoch, max_epoch):
                 print('# Epoch %d' % epoch)
 
